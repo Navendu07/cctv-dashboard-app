@@ -1,7 +1,7 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-prisma
+//prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,6 +10,7 @@ datasource db {
   provider = "postgresql"  // Changed from "sqlite"
   url      = env("DATABASE_URL")
 }
+
 
 model Camera {
   id       String @id @default(cuid())
