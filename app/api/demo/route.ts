@@ -1,10 +1,15 @@
+// app/api/demo/route.ts
 import { NextResponse } from 'next/server';
-import { DemoResponse } from '@/shared/api';
+
+// TEMP: define DemoResponse directly
+type DemoResponse = {
+  message: string;
+};
 
 export async function GET() {
   const response: DemoResponse = {
-    message: 'Hello from Next.js API!'
+    message: 'Hello from the demo endpoint',
   };
-  
+
   return NextResponse.json(response);
 }
