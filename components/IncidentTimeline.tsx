@@ -3,7 +3,7 @@ import { Clock, AlertTriangle, Camera, MapPin } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Incident } from "@shared/api";
+import { Incident } from "@/shared/api/index";
 import { cn } from "@/lib/utils";
 
 interface IncidentTimelineProps {
@@ -61,7 +61,8 @@ export function IncidentTimeline({ selectedIncident, onSelectIncident }: Inciden
 
   // Group incidents by date
   const groupedIncidents = incidents.reduce((groups, incident) => {
-    const date = new Date(incident.timestamp).toDateString();
+    const date = new Date(incident.timestamp ?? incident.tsStart).toDateString();
+
     if (!groups[date]) {
       groups[date] = [];
     }
@@ -86,7 +87,8 @@ export function IncidentTimeline({ selectedIncident, onSelectIncident }: Inciden
                 <div className="flex items-center gap-2 mb-3">
                   <div className="h-px bg-border flex-1" />
                   <span className="text-sm font-medium text-muted-foreground px-2">
-                    {formatDate(dayIncidents[0].timestamp)}
+                    {formatDate(dayIncidents[0]?.timestamp ?? dayIncidents[0]?.tsStart)}
+
                   </span>
                   <div className="h-px bg-border flex-1" />
                 </div>
@@ -128,7 +130,8 @@ export function IncidentTimeline({ selectedIncident, onSelectIncident }: Inciden
                             </Badge>
                           </div>
                           <span className="text-xs text-muted-foreground">
-                            {formatTime(incident.timestamp)}
+                            {formatTime(incident.timestamp ?? incident.tsStart)}
+
                           </span>
                         </div>
 

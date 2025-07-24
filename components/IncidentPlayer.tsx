@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from "react";
 import { Play, Pause, SkipBack, SkipForward, Volume2, Maximize2, AlertTriangle, Eye, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Incident } from "@shared/api";
+import { Incident } from "@/shared/api/index";
 
 interface IncidentPlayerProps {
   incident: Incident | null;
@@ -182,7 +182,8 @@ export function IncidentPlayer({ incident }: IncidentPlayerProps) {
                 <span className="font-medium">Time:</span>
               </div>
               <p className="text-muted-foreground ml-6">
-                {new Date(incident.timestamp).toLocaleString()}
+                <span>{new Date(incident.timestamp ?? incident.tsStart).toLocaleString()}</span>
+
               </p>
             </div>
             
@@ -209,7 +210,7 @@ export function IncidentPlayer({ incident }: IncidentPlayerProps) {
                   <div>
                     <span className="font-medium">Objects Detected:</span>
                     <div className="flex gap-1 mt-1">
-                      {incident.aiAnalysis.objectsDetected.map((obj, idx) => (
+                      {incident.aiAnalysis.objectsDetected.map((obj: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined, idx: Key | null | undefined) => (
                         <Badge key={idx} variant="outline" className="text-xs">
                           {obj}
                         </Badge>

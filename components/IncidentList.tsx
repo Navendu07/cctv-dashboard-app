@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Incident, IncidentsResponse } from "@shared/api";
+import { Incident, IncidentsResponse } from "@/shared/api/index";
 import { cn } from "@/lib/utils";
 
 interface IncidentListProps {
@@ -149,7 +149,7 @@ export function IncidentList({ selectedIncident, onSelectIncident }: IncidentLis
                     </Badge>
                   </div>
                   <span className="text-xs text-muted-foreground">
-                    {formatRelativeTime(incident.timestamp)}
+                    {formatRelativeTime(incident.timestamp?? incident.tsStart)}
                   </span>
                 </div>
 
@@ -169,7 +169,8 @@ export function IncidentList({ selectedIncident, onSelectIncident }: IncidentLis
                   
                   <div className="flex items-center gap-1 text-muted-foreground">
                     <Clock className="h-3 w-3" />
-                    <span>{new Date(incident.timestamp).toLocaleTimeString()}</span>
+                    <span>{new Date(incident.timestamp ?? incident.tsStart).toLocaleTimeString()}</span>
+
                   </div>
                 </div>
 

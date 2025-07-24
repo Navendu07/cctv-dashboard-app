@@ -4,12 +4,11 @@ import { ResolveIncidentResponse } from '@/shared/api';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    const { id } = context.params;
 
-    // Find the incident first
     const existingIncident = await prisma.incident.findUnique({
       where: { id },
       include: { camera: true }
@@ -22,7 +21,6 @@ export async function PATCH(
       );
     }
 
-    // Flip the resolved status
     const updatedIncident = await prisma.incident.update({
       where: { id },
       data: { resolved: !existingIncident.resolved },
@@ -35,10 +33,16 @@ export async function PATCH(
         cameraId: updatedIncident.cameraId,
         type: updatedIncident.type,
         tsStart: updatedIncident.tsStart.toISOString(),
-        tsEnd: updatedIncident.tsEnd?.toISOString() || null,
+        tsEnd: updatedIncident.tsEnd ? new Date(updatedIncident.tsEnd).toISOString() : null,
         thumbnailUrl: updatedIncident.thumbnailUrl,
         resolved: updatedIncident.resolved,
-        camera: updatedIncident.camera
+        camera: updatedIncident.camera,
+        aiAnalysis: undefined,
+        confidence: 0,
+        boundingBox: undefined,
+        description: undefined,
+        severity: '',
+        status: ''
       },
       success: true
     };

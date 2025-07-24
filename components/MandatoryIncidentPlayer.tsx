@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
-import { Incident, Camera as CameraType } from "@shared/api";
+import { Incident, Camera as CameraType } from "@/shared/api/index";
 
 interface MandatoryIncidentPlayerProps {
   selectedIncident: Incident | null;

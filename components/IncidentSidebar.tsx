@@ -3,7 +3,7 @@ import { AlertTriangle, Shield, Eye, Clock, ChevronRight, Circle } from "lucide-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Incident, IncidentsResponse } from "@shared/api";
+import { Incident, IncidentsResponse } from "@/shared/api/index";
 import { cn } from "@/lib/utils";
 
 export function IncidentSidebar() {
@@ -107,7 +107,10 @@ export function IncidentSidebar() {
                 </div>
                 <div className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />
-                  <span>{formatTime(incident.timestamp)} on {formatDate(incident.timestamp)}</span>
+                  <span>
+  {formatTime(incident.timestamp ?? incident.tsStart)} on {formatDate(incident.timestamp ?? incident.tsStart)}
+</span>
+
                 </div>
               </div>
 
